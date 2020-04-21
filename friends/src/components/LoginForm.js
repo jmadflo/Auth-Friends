@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import {axiosWithAuth} from '../utils/axiosWithAuth'
+import Loader from 'react-loader-spinner'
+import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 const LoginForm = props => {
     const [ credentials, setCredentials ] = useState({
         username: '',
         password: ''
     })
+
+    const [ isLoading, setIsLoading ] = useState(false) 
 
     const handleChange = event => {
         setCredentials({
@@ -16,10 +19,12 @@ const LoginForm = props => {
 
     const handleSubmit = event => {
         event.preventDefault()
+        setIsLoading(true)
         axiosWithAuth().post('/api/login', credentials)
         .then(response => {
             console.log(response)
             window.localStorage.setItem('token', response.data.payload)
+            setIsLoading(false)
             setCredentials({
                 username: '',
                 password: ''
@@ -27,6 +32,7 @@ const LoginForm = props => {
             props.history.push('/friends')
         })
         .catch(() => {
+            setIsLoading(false)
             alert('This username and password combination is incorrect.')
         })
     }
@@ -51,6 +57,11 @@ const LoginForm = props => {
                 />
                 <button onClick={handleSubmit}>Log In</button>
             </form>
+            {isLoading && (
+                <div>
+                    <Loader type='TailSpin' width='50'/>
+                </div>
+            )}
         </div>
     )
 }
