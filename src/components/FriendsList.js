@@ -12,6 +12,7 @@ const FriendsList = props => {
     }
 
     return(
+        <>
         <form>
             <label htmlFor='name'> Name: 
                 <input name='name' id='name' value={props.name} onChange={updateForm}/>
@@ -28,6 +29,7 @@ const FriendsList = props => {
         <div className="friends">
             {props.data.map(friend => <Friend key={friend.id} friend={friend}/>)}
         </div>
+        </>
     )
 }
 
