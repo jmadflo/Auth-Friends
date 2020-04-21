@@ -7,10 +7,12 @@ const LoginForm = props => {
         username: '',
         password: ''
     })
-
+    
+    // will use to render loader conditionally
     const [ isLoading, setIsLoading ] = useState(false) 
 
-    const handleChange = event => {
+    // update state with new form values
+    const updateForm = event => {
         setCredentials({
             ...credentials,
             [event.target.name]: event.target.value
@@ -19,16 +21,19 @@ const LoginForm = props => {
 
     const handleSubmit = event => {
         event.preventDefault()
+        // render spinner
         setIsLoading(true)
         axiosWithAuth().post('/api/login', credentials)
         .then(response => {
             console.log(response)
-            window.localStorage.setItem('token', response.data.payload)
+            // store token in local storage with label 'token'
+            localStorage.setItem('token', response.data.payload)
             setIsLoading(false)
             setCredentials({
                 username: '',
                 password: ''
             })
+            // redirect user to /friends after successful login
             props.history.push('/friends')
         })
         .catch(() => {
@@ -46,20 +51,22 @@ const LoginForm = props => {
                     id='username'
                     name='username'
                     type='text'
-                    onChange={handleChange}
+                    onChange={updateForm}
                 />
                 <label htmlFor='password'>Password</label>
                 <input
                     id='password'
                     name='password'
                     type='password'
-                    onChange={handleChange}
+                    onChange={updateForm}
                 />
                 <button onClick={handleSubmit}>Log In</button>
             </form>
+            
+            {/* Render loader under form when loading */}
             {isLoading && (
                 <div>
-                    <Loader type='TailSpin' width='50'/>
+                    <Loader type='TailSpin' color='blue' width='50'/>
                 </div>
             )}
         </div>
