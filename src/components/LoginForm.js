@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import {axiosWithAuth} from '../utils/axiosWithAuth'
 
-const Login = () => {
+const LoginForm = props => {
     const [ credentials, setCredentials ] = useState({
         username: '',
         password: ''
@@ -10,6 +11,23 @@ const Login = () => {
         setCredentials({
             ...credentials,
             [event.target.name]: event.target.value
+        })
+    }
+
+    const handleSubmit = event => {
+        event.preventDefault()
+        axiosWithAuth().post('/api/login', credentials)
+        .then(response => {
+            console.log(response)
+            window.localStorage.setItem('token', response.data.payload)
+            setCredentials({
+                username: '',
+                password: ''
+            })
+            props.history.push('/friends')
+        })
+        .catch(() => {
+            alert('This username and password combination is incorrect.')
         })
     }
 
@@ -26,11 +44,12 @@ const Login = () => {
                 />
                 <label htmlFor='password'>Password</label>
                 <input
+                    id='password'
                     name='password'
                     type='password'
                     onChange={handleChange}
                 />
-                <button>Log In</button>
+                <button onClick={handleSubmit}>Log In</button>
             </form>
         </div>
     )
