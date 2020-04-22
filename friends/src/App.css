@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+  /* border: 1px solid black; */
+}
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 400px;
+  padding: 20px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  background-color: #7F7FFF;
+}
+
+input {
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 4px;
+  height: 20px;
+}
+
+label {
+  margin: 0 0 4px 10px;
+  color: white;
+}
+
+.Friend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  width: 400px;
+  color: black;
+  background-color: #90EE90;
+}
+
+button {
+  background-color: #2D88FF;
+  color: white;
+  width: 100px;
+  height: 35px;
+  font-size: 1rem;
+  border: 2px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 2px;
+}
+
+button:hover {
+  background-color: white;
+  border: 2px solid #2D88FF;
+  color: #2D88FF;
+}
+
+.deleteButton {
+  background-color: #FD5B5F;
+}
+
+.deleteButton:hover {
+  background-color: white;
+  border: 2px solid #FD5B5F;
+  color: #FD5B5F;
+}
+
+.clearTokenButton {
+  background-color: orange;
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+.clearTokenButton:hover {
+  border: 2px solid orange;
+  color: orange;
+}
+
+.formButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.friendForm {
+  margin-bottom: 30px;
+}

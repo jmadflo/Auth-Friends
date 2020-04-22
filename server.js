@@ -13,37 +13,50 @@ let friends = [
     id: 1,
     name: 'Rachel Green',
     age: 30,
-    email: 'rachel@friends.com'
+    email: 'rachel@friends.com',
+    favoriteColor: 'red',
+    favoriteFood: 'pizza'
   },
   {
     id: 2,
     name: 'Joey Tribbiani',
     age: 34,
-    email: 'joey@friends.com'
+    email: 'joey@friends.com',
+    favoriteColor: 'green',
+    favoriteFood: 'sushi'
+    
   },
   {
     id: 3,
     name: 'Chandler Bing',
     age: 32,
-    email: 'chandler@friends.com'
+    email: 'chandler@friends.com',
+    favoriteColor: 'black',
+    favoriteFood: 'human flesh'
   },
   {
     id: 4,
     name: 'Ross Geller',
     age: 32,
-    email: 'ross@friends.com'
+    email: 'ross@friends.com',
+    favoriteColor: 'yellow',
+    favoriteFood: 'burger and fries'
   },
   {
     id: 5,
     name: 'Monica Bing',
     age: 31,
-    email: 'monica@friends.com'
+    email: 'monica@friends.com',
+    favoriteColor: 'red',
+    favoriteFood: 'tacos'
   },
   {
     id: 6,
     name: 'Phoebe Buffay-Hannigan',
     age: 30,
-    email: 'phoebe@friends.com'
+    email: 'phoebe@friends.com',
+    favoriteColor: 'blue',
+    favoriteFood: 'savage jerky from savagejerky.com'
   }
 ];
 
@@ -62,7 +75,7 @@ function authenticator(req, res, next) {
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  if (username === 'Lambda School' && password === 'i<3Lambd4') {
+  if (username === 'Juan' && password === 'banana') {
     req.loggedIn = true;
     res.status(200).json({
       payload: token
