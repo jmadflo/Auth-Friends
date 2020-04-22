@@ -73,6 +73,17 @@ button:hover {
   color: #FD5B5F;
 }
 
+.clearTokenButton {
+  background-color: orange;
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+.clearTokenButton:hover {
+  border: 2px solid orange;
+  color: orange;
+}
+
 .formButtons {
   width: 100%;
   display: flex;

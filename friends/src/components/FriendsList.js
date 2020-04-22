@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 import Friend from './Friend'
 
-const FriendsList = () => {
+const FriendsList = props => {
     const [ formValues, setFormValues ] = useState({
         name: '',
         age: '',
@@ -47,9 +47,16 @@ const FriendsList = () => {
         setSelectedId(friend.id)
     }
 
+    // clear localStorage and go back to login page
+    const removeToken = () => {
+        localStorage.removeItem('token')
+        props.history.push('/')
+    }
+
     // submit get request to the server
     const getData = event => {
         event.preventDefault()
+        console.log(props)
         // render loader
         setIsLoading(true)
         axiosWithAuth()
@@ -158,6 +165,7 @@ const FriendsList = () => {
         <div className="friends">
             {data.map(friend => <Friend key={friend.id} friend={friend} setFriendToEdit={setFriendToEdit} deleteFriend={deleteFriend}/>)}
         </div>
+        <button className='clearTokenButton' onClick={removeToken}>Remove Token</button>
         </>
     )
 }
