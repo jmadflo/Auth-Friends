@@ -33,12 +33,14 @@ const LoginForm = props => {
                 username: '',
                 password: ''
             })
+            console.log(localStorage)
             // redirect user to /friends after successful login
             props.history.push('/friends')
         })
         .catch(() => {
             setIsLoading(false)
             alert('This username and password combination is incorrect.')
+            console.log(localStorage)
         })
     }
 
