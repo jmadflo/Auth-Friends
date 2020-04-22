@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 import Friend from './Friend'
 
-const FriendsList = props => {
+const FriendsList = () => {
     const [ formValues, setFormValues ] = useState({
         name: '',
         age: '',
         email: '',
     })
 
-    // id of friend to be edited or deleted
-    const [ selectedId, setSelectedId ] = useState(0)
+    // id of friend to be edited
+    const [ selectedId, setSelectedId ] = useState('')
 
     // data from server
     const [ data, setData ] = useState([])
@@ -72,6 +72,24 @@ const FriendsList = props => {
             .catch(error => alert(error))
             // exit editing mode
             setIsEditing(false)
+            // set form inputs to empty string
+            setFormValues({
+                name: '',
+                age: '',
+                email: ''
+            })
+            // set selected id to empty string
+            setSelectedId('')
+    }
+
+    const deleteFriend = friendToEdit => {
+        axiosWithAuth()
+            .delete(`/api/friends/${friendToEdit}`)
+            .then(response => {
+                // console.log(response)
+                setData(response.data)
+            })
+            .catch(error => alert(error))
     }
 
     return(
@@ -94,7 +112,7 @@ const FriendsList = props => {
             </div>
         }
         <div className="friends">
-            {data.map(friend => <Friend key={friend.id} friend={friend} setFriendToEdit={setFriendToEdit}/>)}
+            {data.map(friend => <Friend key={friend.id} friend={friend} setFriendToEdit={setFriendToEdit} deleteFriend={deleteFriend}/>)}
         </div>
         </>
     )
