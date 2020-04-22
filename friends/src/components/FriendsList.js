@@ -3,15 +3,19 @@ import { axiosWithAuth } from '../utils/axiosWithAuth'
 import Friend from './Friend'
 
 const FriendsList = props => {
-
     const [ formValues, setFormValues ] = useState({
         name: '',
         age: '',
         email: '',
     })
 
+    // id of friend to be edited or deleted
+    const [ selectedId, setSelectedId ] = useState(0)
+
+    // data from server
     const [ data, setData ] = useState([])
 
+    // is set to true when editing
     const [ isEditing, setIsEditing ] = useState(false)
 
     // update state with new form values when form is updated
@@ -22,9 +26,21 @@ const FriendsList = props => {
         })
     }
 
+    const setFriendToEdit = friend => {
+        // switch to editing mode
+        setIsEditing(true)
+        // populate form with existing friend data
+        setFormValues({
+            name: friend.name,
+            age: friend.age,
+            email: friend.email
+        })
+        // set id of post to be edited
+        setSelectedId(friend.id)
+    }
+
     // submit get request to the server
-    const getData = event => {
-        event.preventDefault()
+    const getData = () => {
         axiosWithAuth()
             .get('/api/friends')
             .then(response => {
@@ -35,8 +51,7 @@ const FriendsList = props => {
     }
 
     // submit post request to the server
-    const postData = event => {
-        event.preventDefault()
+    const postData = () => {
         axiosWithAuth()
             .post('/api/friends', formValues)
             .then(response => {
@@ -44,6 +59,19 @@ const FriendsList = props => {
                 setData(response.data)
             })
             .catch(error => alert(error))
+    }
+
+    // edits an existing post in the server
+    const putData = () => {
+        axiosWithAuth()
+            .put(`/api/friends/${selectedId}`, formValues)
+            .then(response => {
+                // console.log(response)
+                setData(response.data)
+            })
+            .catch(error => alert(error))
+            // exit editing mode
+            setIsEditing(false)
     }
 
     return(
@@ -57,17 +85,16 @@ const FriendsList = props => {
             </label>
             <label htmlFor='email'> Email: 
                 <input name='email' id='email' value={formValues.email} onChange={updateForm}/>
-            </label>
-            {isEditing ? <button>Submit Put</button> : 
-                <div>
-                    <button onClick={getData}>Submit Get</button>
-                    <button onClick={postData}>Submit Post</button>
-                </div>
-            }
-            
+            </label>          
         </form>
+        {isEditing ? <button onClick={putData}>Submit Put</button> : 
+            <div>
+                <button onClick={getData}>Submit Get</button>
+                <button onClick={postData}>Submit Post</button>
+            </div>
+        }
         <div className="friends">
-            {data.map(friend => <Friend key={friend.id} friend={friend}/>)}
+            {data.map(friend => <Friend key={friend.id} friend={friend} setFriendToEdit={setFriendToEdit}/>)}
         </div>
         </>
     )
