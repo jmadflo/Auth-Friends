@@ -6,8 +6,10 @@ const Friend = props => {
             <p>Name:{` ${props.friend.name}`}</p>
             <p>Age:{` ${props.friend.age}`}</p>
             <p>Email:{` ${props.friend.email}`}</p>
+            <p>Favorite Color:{` ${props.friend.favoriteColor}`}</p>
+            <p>Favorite Food:{` ${props.friend.favoriteFood}`}</p>
             <button onClick={() => props.setFriendToEdit(props.friend)}>Edit</button>
-            <button onClick={() => props.deleteFriend(props.friend.id)}>Delete</button>
+            <button className='deleteButton' onClick={() => props.deleteFriend(props.friend.id)}>Delete</button>
         </div>
     )
 }
