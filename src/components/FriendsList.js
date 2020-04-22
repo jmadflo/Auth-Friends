@@ -50,6 +50,7 @@ const FriendsList = props => {
     // clear localStorage and go back to login page
     const removeToken = () => {
         localStorage.removeItem('token')
+        console.log(localStorage)
         props.history.push('/')
     }
 
