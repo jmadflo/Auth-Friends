@@ -7,7 +7,7 @@ const LoginForm = props => {
         username: '',
         password: ''
     })
-    
+
     // will use to render loader conditionally
     const [ isLoading, setIsLoading ] = useState(false) 
 
@@ -43,7 +43,7 @@ const LoginForm = props => {
     }
 
     return (
-        <div className='LoginForm'>
+        <>
             <h1>Login Page</h1>
             <form>
                 <label htmlFor='username'>Username</label>
@@ -69,7 +69,7 @@ const LoginForm = props => {
                     <Loader type='TailSpin' color='blue' width='50'/>
                 </div>
             )}
-        </div>
+        </>
     )
 }
 
