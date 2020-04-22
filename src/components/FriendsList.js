@@ -56,7 +56,6 @@ const FriendsList = props => {
     // submit get request to the server
     const getData = event => {
         event.preventDefault()
-        console.log(props)
         // render loader
         setIsLoading(true)
         axiosWithAuth()
