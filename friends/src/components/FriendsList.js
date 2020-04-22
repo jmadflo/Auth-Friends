@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Loader from 'react-loader-spinner'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 import Friend from './Friend'
 
@@ -19,6 +20,9 @@ const FriendsList = () => {
 
     // is set to true when editing
     const [ isEditing, setIsEditing ] = useState(false)
+
+    // will use to render loader conditionally
+    const [ isLoading, setIsLoading ] = useState(false) 
 
     // update state with new form values when form is updated
     const updateForm = event => {
@@ -46,6 +50,8 @@ const FriendsList = () => {
     // submit get request to the server
     const getData = event => {
         event.preventDefault()
+        // render loader
+        setIsLoading(true)
         axiosWithAuth()
             .get('/api/friends')
             .then(response => {
@@ -53,11 +59,15 @@ const FriendsList = () => {
                 setData(response.data)
             })
             .catch(error => alert(error))
+            // get rid of loader
+            setIsLoading(false)
     }
 
     // submit post request to the server
     const postData = event => {
         event.preventDefault()
+        // render loader
+        setIsLoading(true)
         axiosWithAuth()
             .post('/api/friends', formValues)
             .then(response => {
@@ -65,11 +75,15 @@ const FriendsList = () => {
                 setData(response.data)
             })
             .catch(error => alert(error))
+            // get rid of loader
+            setIsLoading(false)
     }
 
     // edits an existing post in the server
     const putData = event => {
         event.preventDefault()
+        // render loader
+        setIsLoading(true)
         axiosWithAuth()
             .put(`/api/friends/${selectedId}`, formValues)
             .then(response => {
@@ -89,10 +103,14 @@ const FriendsList = () => {
             })
             // set selected id to empty string
             setSelectedId('')
+            // get rid of loader
+            setIsLoading(false)
     }
 
     // deletes friend
     const deleteFriend = friendToEdit => {
+        // render loader
+        setIsLoading(true)
         axiosWithAuth()
             .delete(`/api/friends/${friendToEdit}`)
             .then(response => {
@@ -100,12 +118,14 @@ const FriendsList = () => {
                 setData(response.data)
             })
             .catch(error => alert(error))
+            // get rid of loader
+            setIsLoading(false)
     }
 
-    return(
+    return (
         <>
         <h1>Check Out My Somewhat Cool Friends!</h1>
-        <form>
+        <form className='friendForm'>
             <label htmlFor='name'> Name: </label>
             <input name='name' id='name' value={formValues.name} onChange={updateForm}/>
             
@@ -120,13 +140,21 @@ const FriendsList = () => {
             
             <label htmlFor='favoriteFood'> Favorite Food: </label>
             <input name='favoriteFood' id='favoriteFood' value={formValues.favoriteFood} onChange={updateForm}/>
-            {isEditing ? <button onClick={putData}>Amend Friend</button> : 
-            <div className='formButtons'>
-                <button onClick={getData}>Get Friends</button>
-                <button onClick={postData}>Add Friend</button>
-            </div>
-        }     
+
+            {/* render the amend friend button when the edit button has been clicked on one of the friends */}
+            {isEditing ? <div className='formButtons'><button style={{width: '150px'}} onClick={putData}>Amend Friend</button></div> : 
+                <div className='formButtons'>
+                    <button onClick={getData}>Get Friends</button>
+                    <button onClick={postData}>Add Friend</button>
+                </div>
+            }     
         </form>
+        {isLoading && (
+            <div>
+                <Loader type='TailSpin' color='blue' width='50'/>
+            </div>
+        )}
+        {/* render the list of friends */}
         <div className="friends">
             {data.map(friend => <Friend key={friend.id} friend={friend} setFriendToEdit={setFriendToEdit} deleteFriend={deleteFriend}/>)}
         </div>

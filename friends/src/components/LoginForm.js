@@ -60,7 +60,7 @@ const LoginForm = props => {
                     type='password'
                     onChange={updateForm}
                 />
-                <button onClick={handleSubmit}>Log In</button>
+                <div className='formButtons'><button onClick={handleSubmit}>Log In</button></div>
             </form>
             
             {/* Render loader under form when loading */}

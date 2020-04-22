@@ -22,7 +22,7 @@ form {
 input {
   margin-bottom: 20px;
   width: 100%;
-  border: 1px solid #7F7FFF;
+  border: 1px solid gray;
   border-radius: 4px;
   height: 20px;
 }
@@ -36,14 +36,17 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
+  border: 2px solid gray;
   border-radius: 10px;
   margin-bottom: 20px;
   padding: 20px;
+  width: 400px;
+  color: black;
+  background-color: #90EE90;
 }
 
 button {
-  background-color: green;
+  background-color: #2D88FF;
   color: white;
   width: 100px;
   height: 35px;
@@ -51,10 +54,23 @@ button {
   border: 2px solid white;
   border-radius: 10px;
   cursor: pointer;
+  margin: 2px;
+}
+
+button:hover {
+  background-color: white;
+  border: 2px solid #2D88FF;
+  color: #2D88FF;
 }
 
 .deleteButton {
-  background-color: red;
+  background-color: #FD5B5F;
+}
+
+.deleteButton:hover {
+  background-color: white;
+  border: 2px solid #FD5B5F;
+  color: #FD5B5F;
 }
 
 .formButtons {
@@ -63,5 +79,6 @@ button {
   justify-content: space-around;
 }
 
-
-
+.friendForm {
+  margin-bottom: 30px;
+}
